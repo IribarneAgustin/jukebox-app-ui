@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import AdminNavBar from './AdminNavBar';
 import Sidebar from './Sidebar';
 import SettingStatisticsSection from './SettingsStatisticsSection';
@@ -13,35 +13,6 @@ import SupportSection from './SupportSection'
 
 const AdminPanel = () => {
     const [currentSection, setCurrentSection] = useState('SettingsInstructionsSection');
-    const [response, setResponse] = useState(null);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                console.log(document.cookie);
-
-                // Fetch data from the "/test" endpoint
-                const response = await fetch('/api/test/test', {
-                    method: 'GET',
-                    credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                });
-
-                if (response.ok) {
-                    const data = await response.text();
-                    setResponse(data);
-                } else {
-                    console.error('Error fetching data:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Error fetching data:', error.message);
-            }
-        };
-
-        fetchData();
-    }, []);
 
     const renderSection = () => {
         switch (currentSection) {

@@ -38,14 +38,6 @@ const Sidebar = ({ setCurrentSection }) => {
         </li>
         <li className="mb-2">
           <button
-            onClick={() => setCurrentSection('TrackQueueSection')}
-            className="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-md"
-          >
-            Canciones en cola
-          </button>
-        </li>
-        <li className="mb-2">
-          <button
             onClick={() => setCurrentSection('PaymentHistorySection')}
             className="flex items-center px-4 py-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-md"
           >

@@ -7,15 +7,34 @@ const PaymentHistorySection = () => {
   const [transactionsPerPage] = useState(5);
 
   useEffect(() => {
-    // Mock data for transaction history
-    const mockData = Array.from({ length: 200 }, (_, index) => ({
-      key: index + 1,
-      date: `2023-01-${index + 1}`,
-      amount: Math.floor(Math.random() * 100),
-    }));
+    const fetchTransactionHistory = async () => {
+      try {
+        const response = await fetch('/api/transaction/get', {
+          method: 'GET',
+          credentials: 'include',
+        });
 
-    setTransactions(mockData);
+        if (response.ok) {
+          const data = await response.json();
+          setTransactions(data);
+        } else {
+          console.error('Failed to fetch transaction history');
+        }
+      } catch (error) {
+        console.error('Error fetching transaction history:', error);
+      }
+    };
+
+    fetchTransactionHistory();
   }, []);
+
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
 
   // Pagination
   const indexOfLastTransaction = currentPage * transactionsPerPage;
@@ -25,18 +44,21 @@ const PaymentHistorySection = () => {
   const columns = [
     {
       title: 'Fecha',
-      dataIndex: 'date',
-      key: 'date',
+      dataIndex: 'creationTimestamp',
+      key: 'creationTimestamp',
+      render: (timestamp) => formatDate(timestamp),
     },
     {
       title: 'Hora',
-      dataIndex: 'hour',
-      key: 'hour',
+      dataIndex: 'creationTimestamp',
+      key: 'creationTimestamp',
+      render: (timestamp) => new Date(timestamp).toLocaleTimeString(),
     },
     {
       title: 'Canción',
-      dataIndex: 'key',
-      key: 'key',
+      dataIndex: 'track',
+      key: 'track',
+      render: (track) => `${track.artistName} - ${track.trackName}`,
     },
     {
       title: 'Monto',

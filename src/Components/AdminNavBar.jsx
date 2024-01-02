@@ -3,39 +3,43 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from 'react-router-dom';
 import logo from "../assets/logo.png"
-const navigation = [
-  { name: 'JUKEBOX APP - PANEL DE ADMINISTRADOR', href: '/admin/dashboard', current: false },
-]
+import { Link } from 'react-router-dom';
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
+export default function UserNavbarTest({ setCurrentSection }) {
+  const navigation = [
+    { name: 'JUKEBOX APP - PANEL DE ADMINISTRADOR', href: '/admin/dashboard', current: false },
+  ]
+  const navigate = useNavigate();
 
-const handleLogout = async () => {
-  //const navigate = useNavigate();
-
-  try {
-    const response = await fetch('/api/admin/logout', {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (response.ok) {
-      console.log('Logged out successfully');
-      //navigate('/');
-    } else {
-      console.log('Failed to log out');
-    }
-  } catch (error) {
-    console.error('Error during logout:', error);
-    setLogoutMessage('Error during logout');
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(' ')
   }
-};
 
-export default function UserNavbarTest({setCurrentSection}) {
+  const handleLogout = async () => {
+
+
+    try {
+      const response = await fetch('/api/admin/logout', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        console.log('Logged out successfully');
+        navigate('/admin/login');
+      } else {
+        console.log('Failed to log out');
+      }
+    } catch (error) {
+      console.error('Error during logout:', error);
+      setLogoutMessage('Error during logout');
+    }
+  };
+
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -56,12 +60,15 @@ export default function UserNavbarTest({setCurrentSection}) {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <img
-                    className="h-8 w-auto"
-                    src={logo}
-                    alt="Your Company"
-                  />
+                  <Link to="/">
+                    <img
+                      className="h-8 w-auto cursor-pointer"
+                      src={logo}
+                      alt="JukeboxApp"
+                    />
+                  </Link>
                 </div>
+
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
@@ -115,13 +122,14 @@ export default function UserNavbarTest({setCurrentSection}) {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            onClick={setCurrentSection('SupportSection')}
+                            onClick={() => setCurrentSection('SupportSection')}
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700 cursor-pointer')}
                           >
                             Ayuda - Soporte
                           </a>
                         )}
                       </Menu.Item>
+
                       <Menu.Item>
                         {({ active }) => (
                           <a

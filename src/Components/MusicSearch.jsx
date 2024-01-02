@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import UserLayout from './UserLayout';
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
-import "../assets/MusicSearch.css"
+import "../assets/MusicSearch.css";
+
 const MusicSearch = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [tracks, setTracks] = useState([]);
@@ -18,6 +19,26 @@ const MusicSearch = () => {
       console.error('Error fetching music:', error);
     }
   };
+
+  // Debouncing function
+  const debounce = (func, delay) => {
+    let timeoutId;
+    return function (...args) {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      timeoutId = setTimeout(() => {
+        func.apply(this, args);
+      }, delay);
+    };
+  };
+
+  // Debounced search function
+  const debouncedSearch = debounce(searchMusic, 500);
+
+  useEffect(() => {
+    debouncedSearch();
+  }, [searchQuery, debouncedSearch]);
 
   const createPreference = async (track) => {
     
@@ -61,7 +82,7 @@ const MusicSearch = () => {
 
   return (
     <div className="bg-gray-900 text-white min-h-screen">
-      <UserLayout></UserLayout>
+      <UserLayout>
       <div className="container mx-auto my-8 text-center">
       <h1 className="text-5xl font-extrabold mb-4 custom-bounce">Jukebox App</h1>
 
@@ -113,6 +134,7 @@ const MusicSearch = () => {
           </div>
         )}
       </div>
+      </UserLayout>
     </div>
   );
   

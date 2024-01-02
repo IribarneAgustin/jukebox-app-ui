@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import backgroundImage from '../assets/loginBackground.jpg';
 
 const LoginForm = () => {
   const [loginData, setLoginData] = useState({
@@ -48,7 +49,14 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-900">
+    <div
+      className="flex items-center justify-center min-h-screen"
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
       <div className="max-w-md w-full">
         {alertMessage && (
           <div className="bg-red-500 text-white p-3 mb-4 flex items-center justify-center">
@@ -56,28 +64,28 @@ const LoginForm = () => {
             {alertMessage}
           </div>
         )}
-        <div className="bg-gray-800 p-6 rounded-md shadow-lg hover:shadow-xl transition duration-300">
-          <h2 className="text-2xl font-bold mb-4 text-white text-center">JukeboxApp</h2>
+        <div className="bg-white bg-opacity-80 p-6 rounded-md shadow-lg hover:shadow-xl transition duration-300">
+          <h2 className="text-2xl font-bold mb-4 text-gray-800 text-center">JukeboxApp</h2>
           <input
             type="text"
             placeholder="Username"
             value={loginData.username}
             onChange={(e) => setLoginData({ ...loginData, username: e.target.value })}
-            className="border border-gray-700 rounded-md p-2 w-full mb-4 bg-gray-600 text-white focus:outline-none focus:border-blue-500"
+            className="border border-gray-300 rounded-md p-2 w-full mb-4 bg-gray-100 bg-opacity-70 text-gray-800 focus:outline-none focus:border-blue-500"
           />
           <input
             type="password"
             placeholder="Password"
             value={loginData.password}
             onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
-            className="border border-gray-700 rounded-md p-2 w-full mb-4 bg-gray-600 text-white focus:outline-none focus:border-blue-500"
+            className="border border-gray-300 rounded-md p-2 w-full mb-4 bg-gray-100 bg-opacity-70 text-gray-800 focus:outline-none focus:border-blue-500"
           />
           <div className="text-center">
             <button
               onClick={handleLogin}
               className="bg-blue-500 text-white rounded-md py-2 px-4 hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
             >
-              Login
+              Ingresar
             </button>
           </div>
         </div>

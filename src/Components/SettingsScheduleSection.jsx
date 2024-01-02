@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { notification } from 'antd';
 
 const SettingsScheduleSection = () => {
   const [fromHour, setFromHour] = useState('');
@@ -12,11 +13,64 @@ const SettingsScheduleSection = () => {
     setToHour(event.target.value);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // You can handle the form submission logic here, for example, send the schedule to the server.
-    console.log('Service schedule submitted:', { fromHour, toHour });
+  const openNotification = (type, message, description) => {
+    notification[type]({
+      message,
+      description,
+    });
   };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const response = await fetch('/api/admin/app/schedule', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ fromHour, toHour }),
+      });
+
+      if (response.ok) {
+        console.log('Service schedule submitted successfully');
+        openNotification('success', 'Horario guardado correctamente');
+      } else {
+        console.error('Failed to submit service schedule');
+        openNotification('error', 'Ocurrió un error al guardar el horario de servicio');
+      }
+    } catch (error) {
+      console.error('Error submitting service schedule:', error);
+      openNotification('error', 'Error', 'Ocurrió un error al guardar el horario de servicio');
+    }
+  };
+
+    useEffect(() => {
+      const fetchSchedule = async () => {
+        try {
+          const response = await fetch('/api/admin/app/get/schedule', {
+            method: 'GET',
+            credentials: 'include',
+          });
+  
+          if (response.ok) {
+            const data = await response.json();
+            setFromHour(data.fromHour || ''); 
+            setToHour(data.toHour || '');     
+          } else {
+            console.error('Failed to fetch service schedule');
+            openNotification('error', 'Ocurrió un error al obtener el horario de servicio');
+          }
+        } catch (error) {
+          console.error('Error fetching service schedule:', error);
+          openNotification('error', 'Error', 'Ocurrió un error al obtener el horario de servicio');
+        }
+      };
+  
+      fetchSchedule();
+    }, []);
+
 
   return (
     <section className="mb-8">

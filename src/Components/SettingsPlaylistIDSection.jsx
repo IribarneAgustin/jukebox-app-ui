@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { notification } from 'antd';
 
+
 const SettingsPlaylistIdSection = () => {
   const [playlistId, setPlaylistId] = useState('');
 
@@ -50,23 +51,26 @@ const SettingsPlaylistIdSection = () => {
           method: 'GET',
           credentials: 'include',
         });
-
+  
         if (response.ok) {
           const data = await response.json();
-
+  
           if (data && data.playlistId !== undefined) {
-            setPlaylistId(data.playlistId.toString());
+            setPlaylistId(data.playlistId);
           } else {
             console.error('Invalid data format or missing playlistId in the response');
+            setPlaylistId('');
           }
         } else {
           console.error('Failed to fetch playlist ID');
+          setPlaylistId('');
         }
       } catch (error) {
         console.error('Error fetching playlist ID:', error);
+        setPlaylistId('');
       }
     };
-
+  
     fetchPlaylistId();
   }, []);
 

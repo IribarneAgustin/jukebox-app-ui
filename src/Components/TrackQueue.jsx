@@ -20,7 +20,7 @@ const TrackQueue = () => {
 
   return (
     <div className="bg-gray-900 text-white min-h-screen">
-      <UserLayout></UserLayout>
+      <UserLayout>
       <div className="container mx-auto my-8 text-center">
         <h1 className="text-4xl font-bold mb-4">Canciones en cola</h1>
         <div className="max-w-md mx-auto bg-gray-800 p-6 rounded-md shadow-lg hover:shadow-xl transition duration-300">
@@ -43,6 +43,7 @@ const TrackQueue = () => {
         </div>
         <br></br>
       </div>
+      </UserLayout>
     </div>
   );
 };

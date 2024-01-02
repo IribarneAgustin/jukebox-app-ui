@@ -37,14 +37,14 @@ const SettingStatisticsSection = () => {
 
       <div className="flex justify-between">
         <div>
-          <h3 className="text-lg font-semibold mb-2">Ganancia del día</h3>
+          <h3 className="text-lg font-semibold mb-2">Últimas 24hs</h3>
           <ResponsiveContainer {...commonChartProps}>
-            <BarChart data={[{ day: 'Day', revenue: dailyRevenue }]}>
+            <BarChart data={[{ day: 'Day', Ingresos: dailyRevenue }]}>
               <XAxis dataKey="day" />
               <YAxis />
               <Tooltip />
               <Legend />
-              <Bar dataKey="revenue" fill="#8884d8" />
+              <Bar dataKey="Ingresos" fill="#8884d8" />
             </BarChart>
           </ResponsiveContainer>
         </div>
