@@ -5,6 +5,7 @@ const PaymentHistorySection = () => {
   const [transactions, setTransactions] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [transactionsPerPage] = useState(5);
+  const [totalAmount, setTotalAmount] = useState(0);
 
   useEffect(() => {
     const fetchTransactionHistory = async () => {
@@ -17,6 +18,10 @@ const PaymentHistorySection = () => {
         if (response.ok) {
           const data = await response.json();
           setTransactions(data);
+
+          // Calculate total amount
+          const total = data.reduce((sum, transaction) => sum + transaction.amount, 0);
+          setTotalAmount(total);
         } else {
           console.error('Failed to fetch transaction history');
         }
@@ -76,6 +81,10 @@ const PaymentHistorySection = () => {
       {/* Use the same background color as Ant Design Table */}
       <h2 className="text-2xl font-semibold mb-4">Historial de Pagos</h2>
 
+      <div className="mt-4">
+        <strong>Ganancia Total: ${totalAmount.toFixed(2)}</strong>
+      </div>
+      <br></br>
       <Table
         style={{
           background: '#f0f2f5',
@@ -92,6 +101,7 @@ const PaymentHistorySection = () => {
           showSizeChanger: false,
         }}
       />
+
     </section>
   );
 };

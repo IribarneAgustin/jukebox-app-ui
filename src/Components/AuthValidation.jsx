@@ -31,10 +31,12 @@ const authValidation = (WrappedComponent) => {
         return false;
       } else {
         console.error('Error checking authentication:', response.status);
+        navigate('/admin/login');
         return false;
       }
     } catch (error) {
       console.error('Error checking authentication:', error);
+      navigate('/admin/login');
       return false;
     }
   };

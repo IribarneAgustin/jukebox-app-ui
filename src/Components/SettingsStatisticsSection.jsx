@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import MonthlyBarChart from './MonthlyBarChart';
 
 const SettingStatisticsSection = () => {
   const [dailyRevenue, setDailyRevenue] = useState(0);
@@ -32,63 +33,7 @@ const SettingStatisticsSection = () => {
   };
 
   return (
-    <section className="mb-8">
-      <h2 className="text-2xl font-semibold mb-4">Ganancias obtenidas</h2>
-
-      <div className="flex justify-between">
-        <div>
-          <h3 className="text-lg font-semibold mb-2">Últimas 24hs</h3>
-          <ResponsiveContainer {...commonChartProps}>
-            <BarChart data={[{ day: 'Day', Ingresos: dailyRevenue }]}>
-              <XAxis dataKey="day" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="Ingresos" fill="#8884d8" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-
-        <div>
-          <h3 className="text-lg font-semibold mb-2">Weekly Revenue</h3>
-          <ResponsiveContainer {...commonChartProps}>
-            <BarChart data={weeklyRevenue}>
-              <XAxis dataKey="day" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="revenue" fill="#82ca9d" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-
-        <div>
-          <h3 className="text-lg font-semibold mb-2">Monthly Revenue</h3>
-          <ResponsiveContainer {...commonChartProps}>
-            <BarChart data={monthlyRevenue}>
-              <XAxis dataKey="day" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="revenue" fill="#ffc658" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-
-        <div>
-          <h3 className="text-lg font-semibold mb-2">Yearly Revenue</h3>
-          <ResponsiveContainer {...commonChartProps}>
-            <BarChart data={[{ year: 'Year', revenue: yearlyRevenue }]}>
-              <XAxis dataKey="year" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="revenue" fill="#ff7300" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-    </section>
+    <MonthlyBarChart></MonthlyBarChart>
   );
 };
 
